@@ -1,0 +1,56 @@
+import pandas as pd
+a=pd.read_csv("SMS CLASSIFIER.csv.csv")
+a.isna()
+from sklearn import preprocessing
+y=preprocessing.LabelEncoder()
+a["aug_user_type"]=y.fit_transform(a["aug_user_type"])
+a["sep_user_type"]=y.fit_transform(a["sep_user_type"])
+a["aug_fav_a"]=y.fit_transform(a["aug_fav_a"])
+a["sep_fav_a"]=y.fit_transform(a["sep_fav_a"])
+a["Class"]=y.fit_transform(a["Class"])
+a["Class"].unique()
+a["sep_fav_a"].unique()
+a["aug_fav_a"].unique()
+a["aug_user_type"].unique()
+a["sep_user_type"].unique()
+print("******DISTRIBUSION PLOT******")
+import seaborn as sd
+import matplotlib.pyplot as plt
+sd.distplot(a.aug_user_type)
+sd.distplot(a.aug_fav_a)
+sd.distplot(a.Class)
+print("******LMPLOT******")
+sd.lmplot(x="aug_user_type",y="sep_user_type",data=a)
+sd.lmplot(x="aug_fav_a",y="sep_fav_a",data=a)
+sd.lmplot(x="Class",y="Aggregate_Calls",data=a)
+from matplotlib import pyplot as plt
+plt.hist(a["sep_user_type"])
+plt.hist(a["sep_fav_a"])
+plt.hist(a["Aggregate_Calls"])
+print("*******SCATTER PLOT*******")
+from matplotlib import pyplot as plt
+plt.scatter(a["network_age"],a["Aggregate_Data_Rev"])
+plt.scatter(a["sep_fav_a"],a["Aggregate_ONNET_REV"])
+plt.scatter(a["Aggregate_ONNET_REV"],a["network_age"])
+print("******* PLOT GRAPH *******")
+from matplotlib import pyplot as plt
+plt.plot(a["network_age"],a["Aggregate_Data_Rev"])
+plt.plot(a["sep_fav_a"],a["Aggregate_ONNET_REV"])
+plt.plot(a["Aggregate_ONNET_REV"],a["network_age"])
+print("******SPLIT TEST AND TRAIN DATA******")
+x=a.iloc[:,:-1].values
+print(x)
+y=a["Aggregate_ONNET_REV"]
+print(y)
+print("******TRAIN_TEST_SPLIT ALGORITHM******")
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test= train_test_split(x,y,test_size=0.20,shuffle=True)
+print(x_train)
+print(x_test)
+from matplotlib import pyplot as plt
+import numpy as np
+cars = ['network_age', 'Aggregate_Total_Rev', 'Aggregate_SMS_Rev','Aggregate_Data_Vol','Aggregate_complaint_count','sep_user_type','aug_fav_a','Class']
+data = [23, 17, 35, 29, 12, 41,50,80]
+fig = plt.figure(figsize =(10, 7))
+plt.pie(data)
+plt.show()
