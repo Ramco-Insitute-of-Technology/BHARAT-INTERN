@@ -1,0 +1,58 @@
+import pandas as pd
+a=pd.read_csv("titanic_train.csv")
+a.isna()
+from sklearn import preprocessing
+y=preprocessing.LabelEncoder()
+a["PassengerId"]=y.fit_transform(a["PassengerId"])
+a["Survived"]=y.fit_transform(a["Survived"])
+a["Pclass"]=y.fit_transform(a["Pclass"])
+a["Name"]=y.fit_transform(a["Name"])
+a["Sex"]=y.fit_transform(a["Sex"])
+a["Ticket"]=y.fit_transform(a["Ticket"])
+a["Cabin"]=y.fit_transform(a["Cabin"])
+a["PassengerId"].unique()
+a["Survived"].unique()
+a["Pclass"].unique()
+a["Ticket"].unique()
+a["Name"].unique()
+a["Sex"].unique()
+print("******DISTRIBUSION PLOT******")
+import seaborn as sd
+import matplotlib.pyplot as plt
+sd.distplot(a.PassengerId)
+sd.distplot(a.Survived)
+sd.distplot(a.Ticket)
+print("******LMPLOT******")
+sd.lmplot(x="PassengerId",y="Survived",data=a)
+sd.lmplot(x="PassengerId",y="Pclass",data=a)
+sd.lmplot(x="Ticket",y="Name",data=a)
+from matplotlib import pyplot as plt
+plt.hist(a["PassengerId"])
+plt.hist(a["Survived"])
+plt.hist(a["Ticket"])
+print("*******SCATTER PLOT*******")
+from matplotlib import pyplot as plt
+plt.scatter(a["PassengerId"],a["Survived"])
+plt.scatter(a["Survived"],a["PassengerId"])
+plt.scatter(a["PassengerId"],a["Ticket"])
+print("******* PLOT GRAPH *******")
+from matplotlib import pyplot as plt
+plt.plot(a["Ticket"],a["Survived"])
+plt.plot(a["Survived"],a["PassengerId"])
+plt.plot(a["PassengerId"],a["Ticket"])
+print("******SPLIT TEST AND TRAIN DATA******")
+x=a.iloc[:,:-1].values
+print(x)
+y=a["Ticket"]
+print(y)
+print("******TRAIN_TEST_SPLIT ALGORITHM******")
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test= train_test_split(x,y,test_size=0.20,shuffle=True)
+print(x_train)
+print(x_test)
+from matplotlib import pyplot as plt
+import numpy as np
+cars = ['PassengerId','Survived','Pclass','Name','Sex','Age','SibSp','Parch','Ticket','Fare','Cabin','Embarked']
+fig = plt.figure(figsize =(10, 7))
+plt.pie(data)
+plt.show()
